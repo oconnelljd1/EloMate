@@ -6,10 +6,9 @@ using UnityEngine;
 public enum WinTypes {P1WIN, DRAW, P2WIN}
 public class HUDController : MonoBehaviour
 {
-
-    [SerializeField] private TMP_Text _p1In;
-    [SerializeField] private TMP_Text _p2In;
-    [SerializeField] private TMP_Text _kFactor;
+    [SerializeField] private TMP_InputField _p1In;
+    [SerializeField] private TMP_InputField _p2In;
+    [SerializeField] private TMP_InputField _kFactor;
     [SerializeField] private TMP_Text _p1Out;
     [SerializeField] private TMP_Text _p2Out;
 
@@ -34,8 +33,8 @@ public class HUDController : MonoBehaviour
         if(goodValues != 3)
         {
             Debug.Log($"<color=orange>goodValues: {goodValues}</color>");
-            Debug.Log($"<color=orange>_p1In: {_p1In.text}, _p2In: {_p2In.text}, _kFactor: {_kFactor.text}</color>");
-            Debug.Log($"<color=orange>p1In: {p1In}, p2In: {p2In}, kFactor: {kFactor}</color>");
+            // Debug.Log($"<color=orange>_p1In: {_p1In.text}, _p2In: {_p2In.text}, _kFactor: {_kFactor.text}</color>");
+            // Debug.Log($"<color=orange>p1In: {p1In}, p2In: {p2In}, kFactor: {kFactor}</color>");
             BadValues();
             return;
         }
@@ -45,21 +44,25 @@ public class HUDController : MonoBehaviour
         {
             case WinTypes.P1WIN:
                 outValues = EloMate.CalculateWin(p1In, p2In, kFactor);
+                _p1Out.text = $"{outValues.p1}";
+                _p2Out.text = $"{outValues.p2}";
                 break;
             case WinTypes.DRAW:
                 outValues = EloMate.CalculateDraw(p1In, p2In, kFactor);
+                _p1Out.text = $"{outValues.p1}";
+                _p2Out.text = $"{outValues.p2}";
                 break;
             case WinTypes.P2WIN:
                 outValues = EloMate.CalculateWin(p2In, p1In, kFactor);
+                // important to flip outvalues
+                _p1Out.text = $"{outValues.p2}";
+                _p2Out.text = $"{outValues.p1}";
                 break;
             default:
                 Debug.Log($"<color=orange>Unexpected WinType {winType}</color>");
                 BadValues();
                 return;
         }
-
-        _p1Out.text = $"{outValues.p1}";
-        _p2Out.text = $"{outValues.p2}";
     }
 
     private void BadValues()
