@@ -32,9 +32,6 @@ public class HUDController : MonoBehaviour
         if(int.TryParse(_kFactor.text, out int kFactor)) goodValues++;
         if(goodValues != 3)
         {
-            Debug.Log($"<color=orange>goodValues: {goodValues}</color>");
-            // Debug.Log($"<color=orange>_p1In: {_p1In.text}, _p2In: {_p2In.text}, _kFactor: {_kFactor.text}</color>");
-            // Debug.Log($"<color=orange>p1In: {p1In}, p2In: {p2In}, kFactor: {kFactor}</color>");
             BadValues();
             return;
         }

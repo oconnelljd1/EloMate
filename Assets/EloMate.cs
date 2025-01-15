@@ -24,6 +24,8 @@ public class EloMate : MonoBehaviour
     // calculate new elo values from a draw
     public static (int, int) CalculateDraw(float p1In, float p2In, int kFactor = 32)
     {
+        // TR = Transformed Rating
+        // WR = Win Rate
         float p1TR, p2TR, p1WR, p2WR, p1Out, p2Out;
         p1TR = Mathf.Pow(10, p1In / 400);
         p2TR = Mathf.Pow(10, p2In / 400);
