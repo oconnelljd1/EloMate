@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WinModeToggle : MonoBehaviour
+namespace EloMate
 {
-    [SerializeField] private WinTypes winType = WinTypes.P1WIN;
-    [SerializeField] private HUDController hud;
-
-    public void OnValueChanged(Toggle toggle)
+    public class WinModeToggle : MonoBehaviour
     {
-        if(toggle.isOn == false) return;
+        [SerializeField] private WinTypes winType = WinTypes.P1WIN;
+        [SerializeField] private HUDController hud;
 
-        hud.SetWinMode(winType);
+        public void OnValueChanged(Toggle toggle)
+        {
+            if(toggle.isOn == false) return;
+
+            hud.SetWinMode(winType);
+        }
     }
 }

@@ -3,74 +3,77 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public enum WinTypes {P1WIN, DRAW, P2WIN}
-public class HUDController : MonoBehaviour
+namespace EloMate
 {
-    [SerializeField] private TMP_InputField _p1In;
-    [SerializeField] private TMP_InputField _p2In;
-    [SerializeField] private TMP_InputField _kFactor;
-    [SerializeField] private TMP_Text _p1Out;
-    [SerializeField] private TMP_Text _p2Out;
+    public enum WinTypes { P1WIN, DRAW, P2WIN }
 
-    private WinTypes winType;
-
-    void Start()
+    public class HUDController : MonoBehaviour
     {
-        _p1In.text = "1000";
-        _p2In.text = "1100";
-        _kFactor.text = "32";
+        [SerializeField] private TMP_InputField _p1In;
+        [SerializeField] private TMP_InputField _p2In;
+        [SerializeField] private TMP_InputField _kFactor;
+        [SerializeField] private TMP_Text _p1Out;
+        [SerializeField] private TMP_Text _p2Out;
 
-        UpdateDisplay();
-    }
+        private WinTypes winType;
 
-    public void UpdateDisplay()
-    {
-        // int p1In, p2In, kFactor;
-        int goodValues = 0;
-        if(int.TryParse(_p1In.text, out int p1In)) goodValues++;
-        if(int.TryParse(_p2In.text, out int p2In)) goodValues++;
-        if(int.TryParse(_kFactor.text, out int kFactor)) goodValues++;
-        if(goodValues != 3)
+        void Start()
         {
-            BadValues();
-            return;
+            _p1In.text = "1000";
+            _p2In.text = "1100";
+            _kFactor.text = "32";
+
+            UpdateDisplay();
         }
 
-        (int p1, int p2) outValues;
-        switch(winType)
+        public void UpdateDisplay()
         {
-            case WinTypes.P1WIN:
-                outValues = EloMate.CalculateWin(p1In, p2In, kFactor);
-                _p1Out.text = $"{outValues.p1}";
-                _p2Out.text = $"{outValues.p2}";
-                break;
-            case WinTypes.DRAW:
-                outValues = EloMate.CalculateDraw(p1In, p2In, kFactor);
-                _p1Out.text = $"{outValues.p1}";
-                _p2Out.text = $"{outValues.p2}";
-                break;
-            case WinTypes.P2WIN:
-                outValues = EloMate.CalculateWin(p2In, p1In, kFactor);
-                // important to flip outvalues
-                _p1Out.text = $"{outValues.p2}";
-                _p2Out.text = $"{outValues.p1}";
-                break;
-            default:
-                Debug.Log($"<color=orange>Unexpected WinType {winType}</color>");
+            int goodValues = 0;
+            if (int.TryParse(_p1In.text, out int p1In)) goodValues++;
+            if (int.TryParse(_p2In.text, out int p2In)) goodValues++;
+            if (int.TryParse(_kFactor.text, out int kFactor)) goodValues++;
+            if (goodValues != 3)
+            {
                 BadValues();
                 return;
+            }
+
+            (int p1, int p2) outValues;
+            switch (winType)
+            {
+                case WinTypes.P1WIN:
+                    outValues = EloMate.CalculateWin(p1In, p2In, kFactor);
+                    _p1Out.text = $"{outValues.p1}";
+                    _p2Out.text = $"{outValues.p2}";
+                    break;
+                case WinTypes.DRAW:
+                    outValues = EloMate.CalculateDraw(p1In, p2In, kFactor);
+                    _p1Out.text = $"{outValues.p1}";
+                    _p2Out.text = $"{outValues.p2}";
+                    break;
+                case WinTypes.P2WIN:
+                    outValues = EloMate.CalculateWin(p2In, p1In, kFactor);
+                    // important to flip outvalues
+                    _p1Out.text = $"{outValues.p2}";
+                    _p2Out.text = $"{outValues.p1}";
+                    break;
+                default:
+                    Debug.Log($"<color=orange>Unexpected WinType {winType}</color>");
+                    BadValues();
+                    return;
+            }
         }
-    }
 
-    private void BadValues()
-    {
-        _p1Out.text = "N/A";
-        _p2Out.text = "N/A";
-    }
+        private void BadValues()
+        {
+            _p1Out.text = "N/A";
+            _p2Out.text = "N/A";
+        }
 
-    public void SetWinMode(WinTypes type)
-    {
-        winType = type;
-        UpdateDisplay();
+        public void SetWinMode(WinTypes type)
+        {
+            winType = type;
+            UpdateDisplay();
+        }
     }
 }
