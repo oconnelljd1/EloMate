@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static RedHeadToolz.Utils.EloMate;
 
 namespace EloMate
 {
@@ -42,17 +43,17 @@ namespace EloMate
             switch (winType)
             {
                 case WinTypes.P1WIN:
-                    outValues = EloMate.CalculateWin(p1In, p2In, kFactor);
+                    outValues = CalculateWin(p1In, p2In, kFactor);
                     _p1Out.text = $"{outValues.p1}";
                     _p2Out.text = $"{outValues.p2}";
                     break;
                 case WinTypes.DRAW:
-                    outValues = EloMate.CalculateDraw(p1In, p2In, kFactor);
+                    outValues = CalculateDraw(p1In, p2In, kFactor);
                     _p1Out.text = $"{outValues.p1}";
                     _p2Out.text = $"{outValues.p2}";
                     break;
                 case WinTypes.P2WIN:
-                    outValues = EloMate.CalculateWin(p2In, p1In, kFactor);
+                    outValues = CalculateWin(p2In, p1In, kFactor);
                     // important to flip outvalues
                     _p1Out.text = $"{outValues.p2}";
                     _p2Out.text = $"{outValues.p1}";

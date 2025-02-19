@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EloMate
+namespace RedHeadToolz.Utils
 {
-    public class EloMate : MonoBehaviour
+    public static class EloMate
     {
         // calculate new elo values as though P1 wins
         public static (int, int) CalculateWin(float p1In, float p2In, int kFactor = 32)
